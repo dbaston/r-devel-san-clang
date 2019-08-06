@@ -133,3 +133,7 @@ RUN cd /usr/local/bin \
 ## Install littler
 RUN ASAN_OPTIONS=detect_leaks=0 R --slave -e "install.packages('littler')" \
 	&& ASAN_OPTIONS=detect_leaks=0 RD --slave -e "install.packages('littler')"
+
+RUN mkdir ~/.R && \
+    echo 'CC = clang -std=gnu99 -fsanitize=undefined -fno-omit-frame-pointer' > ~/.R/Makevars && \
+    echo 'CXX = clang -fsanitize=undefined -fno-omit-frame-pointer' >> ~/.R/Makevars
